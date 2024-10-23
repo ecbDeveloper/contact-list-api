@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: bitnami/postgresql
+    container_name: database_contact_list
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=contact_list
+    volumes:
+      - contact_list_data:/bitnami/postgresql
+volumes:
+  contact_list_data:
