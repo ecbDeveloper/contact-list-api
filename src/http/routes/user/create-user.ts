@@ -1,7 +1,7 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { prisma } from "../../../lib/prisma-client";
-import bcrypt from 'bcryptjs'
-import { z } from 'zod'
+import bcrypt from 'bcryptjs';
+import { z } from 'zod';
 
 export const createUser: FastifyPluginAsyncZod = async app => {
     app.post('/user',

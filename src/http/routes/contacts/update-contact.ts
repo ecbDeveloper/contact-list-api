@@ -1,11 +1,6 @@
-import { FastifyPluginAsyncZod } from "fastify-type-provider-zod"
-import { z } from "zod"
-import { prisma } from "../../../lib/prisma-client"
-import { FastifyRequest } from "fastify"
-
-const paramsSchema = z.object({
-    id: z.string().uuid()
-});
+import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
+import { z } from "zod";
+import { prisma } from "../../../lib/prisma-client";
 
 export const updateContact: FastifyPluginAsyncZod = async app => {
     app.put('/contact/:id',
