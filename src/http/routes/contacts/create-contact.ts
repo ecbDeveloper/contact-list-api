@@ -33,10 +33,7 @@ export const createContact: FastifyPluginAsyncZod = async app => {
             const verifyIfExistsContact = await prisma.contacts.findFirst({
                 where: {
                     userId,
-                    OR: [
-                        { email },
-                        { phone }
-                    ],
+                    OR: [{ email }, { phone }],
                 }
             })
             if (verifyIfExistsContact) {

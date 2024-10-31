@@ -1,6 +1,6 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { prisma } from "../../../lib/prisma-client";
-import bcrypt from 'bcryptjs';
+import { hash } from 'bcryptjs';
 import { z } from 'zod';
 
 export const createUser: FastifyPluginAsyncZod = async app => {
@@ -29,17 +29,15 @@ export const createUser: FastifyPluginAsyncZod = async app => {
         async (req, reply) => {
             const { name, email, password } = req.body;
             const verifyIfUserExists = await prisma.user.findFirst({
-                where: {
-                    email
-                }
+                where: { email }
             })
             if (verifyIfUserExists) {
                 return reply.status(409).send({ message: 'User already exists' })
 
             }
 
-            const salt = bcrypt.genSaltSync(10);
-            const hashedPassword = bcrypt.hashSync(password, salt);
+            const salt = 10;
+            const hashedPassword = await hash(password, salt);
 
 
             const userData = await prisma.user.create({
