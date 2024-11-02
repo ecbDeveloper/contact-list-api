@@ -18,7 +18,6 @@ export const updateContact: FastifyPluginAsyncZod = async app => {
                 }),
                 response: {
                     201: z.object({
-                        id: z.string(),
                         name: z.string(),
                         email: z.string(),
                         phone: z.string(),
@@ -64,7 +63,7 @@ export const updateContact: FastifyPluginAsyncZod = async app => {
                 return reply.status(400).send({ id, message: 'Bad Request' })
             }
 
-            return reply.status(200).send({ id, name, email, phone, message: 'User updated successfully' })
+            return reply.status(200).send({ name, email, phone, message: 'User updated successfully' })
         }
     )
 }

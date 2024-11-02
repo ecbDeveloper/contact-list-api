@@ -18,11 +18,9 @@ export const deleteContact: FastifyPluginAsyncZod = async app => {
                         message: z.string()
                     }),
                     400: z.object({
-                        id: z.string(),
                         message: z.string()
                     }),
                     404: z.object({
-                        id: z.string(),
                         message: z.string()
                     })
                 }
@@ -39,7 +37,7 @@ export const deleteContact: FastifyPluginAsyncZod = async app => {
                 }
             });
             if (!contact) {
-                return reply.status(404).send({ id, message: 'User not found' })
+                return reply.status(404).send({ message: 'User not found' })
             }
 
 
@@ -49,7 +47,7 @@ export const deleteContact: FastifyPluginAsyncZod = async app => {
                 }
             });
             if (!contactData) {
-                return reply.status(400).send({ id, message: 'Bad Request' })
+                return reply.status(400).send({ message: 'Bad Request' })
             }
 
             return reply.status(200).send({ id, message: 'User deleted successfully' })
