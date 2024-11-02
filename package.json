@@ -7,10 +7,12 @@
     "node": "20.17.0"
   },
   "scripts": {
+    "start": "node dist/server.js",
     "dev": "tsx --watch src/server.ts",
     "db:migrate": "npm run env:load prisma migrate dev",
+    "db:reset": "npm run env:load prisma migrate reset --force",
     "db:studio": "npm run env:load prisma studio",
-    "build": "tsup src",
+    "build": "tsup src/server.ts --format cjs,esm --dts --clean --sourcemap --minify", 
     "env:load": "dotenv -e ./.env --"
   },
   "keywords": [],
