@@ -1,7 +1,7 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from 'zod';
 import { prisma } from "../../../lib/prisma-client";
-import { compare } from 'bcryptjs'
+import bcrypt from 'bcryptjs'
 
 export const userLogin: FastifyPluginAsyncZod = async app => {
     app.post('/login',
@@ -39,20 +39,15 @@ export const userLogin: FastifyPluginAsyncZod = async app => {
                 return reply.status(404).send({ message: 'Invalid email or password' })
             }
 
-            const isPasswordValid = await compare(password, userData.password)
+            const isPasswordValid = await bcrypt.compare(password, userData.password)
             if (!isPasswordValid) {
                 return reply.status(401).send({ message: 'Invalid email or password' })
             }
 
             const token = await reply.jwtSign(
-                {
-                    sub: userData.id
-                },
-                {
-                    sign: {
-                        expiresIn: '1d',
-                    }
-                });
+                { sub: userData.id },
+                { sign: { expiresIn: '1d', } }
+            );
 
             return reply.status(200).send({ id: userData.id, email, name: userData.name, token })
         }

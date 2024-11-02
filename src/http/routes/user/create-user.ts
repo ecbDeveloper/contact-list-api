@@ -1,6 +1,6 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { prisma } from "../../../lib/prisma-client";
-import { hash } from 'bcryptjs';
+import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 
 export const createUser: FastifyPluginAsyncZod = async app => {
@@ -16,9 +16,9 @@ export const createUser: FastifyPluginAsyncZod = async app => {
                 }),
                 response: {
                     201: z.object({
+                        message: z.string(),
                         id: z.string(),
                         token: z.string(),
-                        message: z.string(),
                     }),
                     409: z.object({
                         message: z.string()
@@ -37,10 +37,10 @@ export const createUser: FastifyPluginAsyncZod = async app => {
             }
 
             const salt = 10;
-            const hashedPassword = await hash(password, salt);
+            const hashedPassword = await bcrypt.hash(password, salt);
 
 
-            const userData = await prisma.user.create({
+            const { id } = await prisma.user.create({
                 data: {
                     name,
                     email,
@@ -49,15 +49,10 @@ export const createUser: FastifyPluginAsyncZod = async app => {
             });
 
             const token = await reply.jwtSign(
-                {
-                    sub: userData.id
-                },
-                {
-                    sign: {
-                        expiresIn: '1d',
-                    }
-                });
+                { sub: id },
+                { sign: { expiresIn: '1d', } }
+            );
 
-            return reply.status(201).send({ id: userData.id, token, message: 'User created successfully' })
+            return reply.status(201).send({ message: 'User created successfully', id, token })
         });
 }
