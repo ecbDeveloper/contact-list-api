@@ -26,20 +26,18 @@ export const findAllContactsFromUser: FastifyPluginAsyncZod = async app => {
             const userId = await req.getUserIdFromToken()
 
             const contactsData = await prisma.contacts.findMany({
-                where: { userId }
+                where: { userId },
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    phone: true
+                }
             });
             if (contactsData.length === 0) {
                 return reply.status(404).send({ message: 'User has no contacts' })
             }
 
-            const formatteddContactsData = contactsData.map(contactData => ({
-                id: contactData.id,
-                name: contactData.name,
-                email: contactData.email,
-                phone: contactData.phone
-            })
-            );
-
-            return reply.status(200).send(formatteddContactsData)
+            return reply.status(200).send(contactsData)
         });
 } 
