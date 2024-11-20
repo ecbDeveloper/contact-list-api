@@ -9,6 +9,4 @@ services:
       - POSTGRES_PASSWORD=docker
       - POSTGRES_DB=contact_list
     volumes:
-      - contact_list_data:/bitnami/postgresql
-volumes:
-  contact_list_data:
+      - ${HOME}/docker/volumes/postgres:/bitnami/postgresql
