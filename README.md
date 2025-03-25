@@ -13,7 +13,7 @@ A simple **CRUD** API for managing a contact list, built with **TypeScript** and
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-username/contact-list-crud.git
+   git clone https://github.com/ecbDeveloper/contact-list-api.git
    cd contact-list-crud
    ```
 
@@ -41,10 +41,3 @@ A simple **CRUD** API for managing a contact list, built with **TypeScript** and
 
 - **Fastify** – High-performance web framework
 - **TypeScript** – Strongly typed JavaScript
-
-## 📜 License
-
-This project is licensed under the **MIT License**.
-
-Feel free to contribute and suggest improvements! 🚀
-
