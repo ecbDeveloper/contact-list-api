@@ -14,7 +14,7 @@ A simple **CRUD** API for managing a contact list, built with **TypeScript** and
 1. Clone the repository:
    ```sh
    git clone https://github.com/ecbDeveloper/contact-list-api.git
-   cd contact-list-crud
+   cd contact-list-api
    ```
 
 2. Install dependencies:
